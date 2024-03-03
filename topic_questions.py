@@ -54,10 +54,19 @@ class TopicQuestions:
         )
         self.current_question_number += num_questions  # keep track of the number of questions
 
-        # regenerate a specific question
+    # regenerate a specific question
     def alter_question(self, question_number, num_choices):
         response = self.topic_chat.send_message(
             f"Replace the {question_number}. question with a new one in its place and have the number of choices be "
             f"{num_choices}. Keep the formatting the same. Update the answer in the python list to correspond to the "
             f"new question."
         )
+
+    # remove a specific question and renumber subsequent questions
+    def remove_question(self, question_number):
+        response = self.topic_chat.send_message(
+            f"Delete question number {question_number}. and it's corresponding answer from the answer list. "
+            f"Number the subsequent question to {question_number} and "
+            f"all other subsequent questions +1 of their current value."
+        )
+        self.current_question_number -= 1

@@ -62,3 +62,12 @@ class TextQuestions:
             f"{num_choices}. Keep the formatting the same. Update the answer in the python list to correspond to the "
             f"new question."
         )
+
+    # remove a specific question and renumber subsequent questions
+    def remove_question(self, question_number):
+        response = self.text_chat.send_message(
+            f"Delete question number {question_number}. and it's corresponding answer from the answer list. "
+            f"Number the subsequent question to {question_number} and "
+            f"all other subsequent questions +1 of their current value."
+        )
+        self.current_question_number -= 1
