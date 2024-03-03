@@ -54,3 +54,11 @@ class TextQuestions:
             f"end of the questions. Keep all other formatting the same."
         )
         self.current_question_number += num_questions  # keep track of the number of questions
+
+    # regenerate a specific question
+    def alter_question(self, question_number, num_choices):
+        response = self.text_chat.send_message(
+            f"Replace the {question_number}. question with a new one in its place and have the number of choices be "
+            f"{num_choices}. Keep the formatting the same. Update the answer in the python list to correspond to the "
+            f"new question."
+        )
