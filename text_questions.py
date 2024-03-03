@@ -63,6 +63,13 @@ class TextQuestions:
             f"new question."
         )
 
+    # regenerate the choices for a specific question
+    def alter_choices(self, question_number, num_choices):
+        response = self.text_chat.send_message(
+            f"Replace the choices for the {question_number}. question, but keep the choice that is the correct answer "
+            f"and have the number of choices be {num_choices}."
+        )
+
     # remove a specific question and renumber subsequent questions
     def remove_question(self, question_number):
         response = self.text_chat.send_message(
