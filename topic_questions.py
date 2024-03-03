@@ -44,3 +44,12 @@ class TopicQuestions:
             # [a, b, a, d] (Answer key)
         )
         self.current_question_number += num_questions  # keep track of the number of questions
+
+    def add_question(self, num_questions, num_choices):
+        response = self.topic_chat.send_message(
+            f"After the last set of questions add {num_questions} more multiple-choice questions with {num_choices} "
+            f"choices over the same topic {self.topic}. Start the new set of questions with the question number "
+            f"{self.current_question_number}. Add the answers to the python list of answers and keep the list at the "
+            f"end of the questions. Keep all other formatting the same."
+        )
+        self.current_question_number += num_questions  # keep track of the number of questions
