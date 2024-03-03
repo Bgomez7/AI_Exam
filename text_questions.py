@@ -23,3 +23,24 @@ class TextQuestions:
             # count += 1
         return return_string
 
+    def generate_questions(self, num_questions, num_choices):
+        response = self.text_chat.send_message(
+            # Topic, number of questions and choices per question
+            f"Give me {num_questions} multiple-choice questions with {num_choices} choices using the following text: "
+            f"\"{self.text_src}\"."
+            # 1. (no indentations preceding number)
+            f" Start the question number with {self.current_question_number}. and have no indentations preceding the "
+            # 1. What is a question?
+            f"question number. After the question number add a space, followed by the question. "
+            #   (a)
+            f"Have the choice markers be preceded by an indentation once and have the format (a), "
+            #   (a), (b), ... (z)
+            f"where we have a lowercase letter wrapped in parentheses. The choice markers will follow alphabetical "
+            f"order starting from \"a\" and ending with \"z\" if there are enough choices. "
+            #   (a) choice1 \n, (b) choice2 \n, ... (z) choice26
+            f"Following the letter marker, add a space and then the "
+            f"choice. Keep each choice in their own line."
+            f"After all questions have been listed, have a python list with answers to the questions."
+            # [a, b, a, d] (Answer key)
+        )
+        self.current_question_number += num_questions  # keep track of the number of questions
