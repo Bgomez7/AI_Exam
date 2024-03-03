@@ -70,3 +70,10 @@ class TopicQuestions:
             f"all other subsequent questions +1 of their current value."
         )
         self.current_question_number -= 1
+
+    # Change to questions -> array, choices -> array, answer list -> array. All wrapped in JSON.
+    def print_exam(self):
+        response = self.topic_chat.send_message(
+            "Print all exam questions and the answer key without any additions to the formatting."
+        )
+        return self.topic_chat.history[-1]
