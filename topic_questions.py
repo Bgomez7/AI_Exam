@@ -18,7 +18,7 @@ class TopicQuestions:
         # count = 0
         for message in self.topic_chat.history:
             # if count % 2 != 0:
-            return_string += f"\nNew\n\n{message.parts[0].text}End"
+            return_string += f"\n\n{message.parts[0].text}"
             # count += 1
         return return_string
 
@@ -73,9 +73,12 @@ class TopicQuestions:
     def remove_question(self, question_number):
         response = self.topic_chat.send_message(
             f"Delete question number {question_number}. and it's corresponding answer from the answer list. "
-            f"Number the subsequent question to {question_number} and "
-            f"all other subsequent questions +1 of their current value."
         )
+        if question_number < self.current_question_number - 1:
+            response = self.topic_chat.send_message(
+                f"Change the number of the questions from {question_number + 1}.-{self.current_question_number - 1}. "
+                f"as {question_number}.-{self.current_question_number - 2}."
+            )
         self.current_question_number -= 1
 
     # Change to questions -> array, choices -> array, answer list -> array. All wrapped in JSON.

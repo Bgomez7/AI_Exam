@@ -19,7 +19,7 @@ class TextQuestions:
         # count = 0
         for message in self.text_chat.history:
             # if count % 2 != 0:
-            return_string += f"\nNew\n\n{message.parts[0].text}End"
+            return_string += f"\n\n{message.parts[0].text}"
             # count += 1
         return return_string
 
@@ -64,19 +64,25 @@ class TextQuestions:
         )
 
     # regenerate the choices for a specific question
+    # not working, fix later if enough time
     def alter_choices(self, question_number, num_choices):
         response = self.text_chat.send_message(
-            f"Replace the choices for the {question_number}. question, but keep the choice that is the correct answer "
-            f"and have the number of choices be {num_choices}."
+            f"Change all choices except for the choice that is the answer for question {question_number}. with "
+            f"different choices."
+            f"Have the number of choices be {num_choices}. If a regenerated choice is the same as the "
+            f"answer choice then regenerate it again. Do not add any additional formatting."
         )
 
     # remove a specific question and renumber subsequent questions
     def remove_question(self, question_number):
         response = self.text_chat.send_message(
             f"Delete question number {question_number}. and it's corresponding answer from the answer list. "
-            f"Number the subsequent question to {question_number} and "
-            f"all other subsequent questions +1 of their current value."
         )
+        if question_number < self.current_question_number - 1:
+            response = self.text_chat.send_message(
+                f"Change the number of the questions from {question_number + 1}.-{self.current_question_number - 1}. "
+                f"as {question_number}.-{self.current_question_number - 2}."
+            )
         self.current_question_number -= 1
 
     # Change to questions -> array, choices -> array, answer list -> array. All wrapped in JSON.
@@ -84,4 +90,4 @@ class TextQuestions:
         response = self.text_chat.send_message(
             "Print all exam questions and the answer key without any additions to the formatting."
         )
-        return self.text_chat.history[-1]
+        # return self.text_chat.history[-1]
