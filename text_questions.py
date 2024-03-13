@@ -24,24 +24,25 @@ class TextQuestions:
         return return_string
 
     def generate_questions(self, num_questions, num_choices):
+        # Topic, number of questions and choices per question
         response = self.text_chat.send_message(
-            # Topic, number of questions and choices per question
-            f"Give me {num_questions} multiple-choice questions with {num_choices} choices using the following text: "
-            f"\"{self.text_src}\"."
-            # 1. (no indentations preceding number)
-            f" Start the question number with {self.current_question_number}. and have no indentations preceding the "
-            # 1. What is a question?
-            f"question number. After the question number add a space, followed by the question. "
-            #   (a)
-            f"Have the choice markers be preceded by an indentation once and have the format (a), "
-            #   (a), (b), ... (z)
+            f"You are a teacher tasked with making an exam. The exam will consist of multiple-choice questions. "
+            f"Generate {num_questions} questions with {num_choices} choices per question over the "
+            f"text: \"{self.text_src}\""
+        )
+        # 1. What is a question?
+        response = self.text_chat.send_message(
+            f"The exam template formatting for every question will be to start with 1. as in "
+            f"the question number with no indentation preceding the number, followed by a space then the question. "
+            f"generate only 1 question with this format. Example: \"1. This is an example question?\""
+        )
+        #   (a) choice1\n, (b) choice2\n, ... (z) choice26
+        response = self.text_chat.send_message(
+            f"Now change choices so that each choice marker will be preceded by four spaces and have the format (a), "
             f"where we have a lowercase letter wrapped in parentheses. The choice markers will follow alphabetical "
-            f"order starting from \"a\" and ending with \"z\" if there are enough choices. "
-            #   (a) choice1 \n, (b) choice2 \n, ... (z) choice26
-            f"Following the letter marker, add a space and then the "
-            f"choice. Keep each choice in their own line."
-            f"After all questions have been listed, have a python list with answers to the questions."
-            # [a, b, a, d] (Answer key)
+            f"order starting from \"a\" and ending with \"z\" if there are enough choices. Following the letter "
+            f"marker, add a space and then the choice. Keep each choice in their own line. "
+            f"Example: \"\n    (a) choice1\n    (b) choice_2\n    (c) choice_3\n    (d) choice_4"
         )
         self.current_question_number += num_questions  # keep track of the number of questions
 
@@ -49,9 +50,9 @@ class TextQuestions:
     def add_question(self, num_questions, num_choices):
         response = self.text_chat.send_message(
             f"After the last set of questions add {num_questions} more multiple-choice questions with {num_choices} "
-            f"choices over the same text from the first input. Start the new set of questions with the question number "
-            f"{self.current_question_number}. Add the answers to the python list of answers and keep the list at the "
-            f"end of the questions. Keep all other formatting the same."
+            f"choices over the same text from the first set of questions. Start the new set of questions with the "
+            f"question number {self.current_question_number}. Add the answers to the python list of answers and keep "
+            f"the list at the end of the questions. Keep all other formatting the same."
         )
         self.current_question_number += num_questions  # keep track of the number of questions
 
@@ -88,6 +89,6 @@ class TextQuestions:
     # Change to questions -> array, choices -> array, answer list -> array. All wrapped in JSON.
     def print_exam(self):
         response = self.text_chat.send_message(
-            "Print all exam questions and the answer key without any additions to the formatting."
+            "Print all exam questions and the answer key without any changes or additions to the formatting."
         )
         # return self.text_chat.history[-1]
