@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>AI Exam Website</title>
+</head>
+<body>
+  <h1>AI EXAM GENERATOR</h1>
+  <span>Generate exams using large language models (LLMs).</span>
+  <!--Wrapper for buttons Input | AI -->
+  <div id="home_grid_wrapper">
+    <!--Input buttons -->
+    <div id="home_grid_left">
+      <button>
+        <input type="radio" id="textradio" name="inputgroup" value="Text" checked>
+        <label for="textradio">Text</label>
+      </button>
+      <button>
+        <input type="radio" id="topicradio" name="inputgroup" value="Topic">
+        <label for="topicradio">Topic</label>
+      </button>
+    </div>
+    <!--AI to generate-->
+    <div id="home_grid_right">
+      <button>
+        <input type="radio" id="geminiradio" name="aigroup" value="Gemini" checked>
+        <label for="geminiradio">Gemini</label>
+      </button>
+      <button>
+        <input type="radio" id="gptradio" name="aigroup" value="GPT-3.5">
+        <label for="gptradio">GPT-3.5</label>
+      </button>
+    </div>
+  </div>
+  <div>
+    <textarea name="input_text" placeholder="Input either text here or a topic" cols="30" rows="10" required></textarea>
+  </div>
+  <div>
+    <select>
+      <option>Multiple-Choice</option>
+      <option>True/False</option>
+      <option>Select All</option>
+    </select>
+    <textarea name="num_questions" placeholder="0" cols="1" rows="1"></textarea>
+    <input type="submit">
+  </div>
+  <!--Descriptions of Input Options. -->
+  <div>
+    <h2>Text or Topic?</h2>
+    <p>The text option allows sections from a textbook to be inputted to generate questions. The topic option
+    can be a general or specific topic. Using the AI option selected, the AI will generate questions over the
+    inputted topic.</p>
+    <h2>Gemini or GPT-3.5?</h2>
+    <p>Both options are considered large language models. Gemini is developed by Google and out-performs
+    GPT-3.5 on many metrics. Gemini is considered to be the better option. GPT-3.5, developed by OpenAI was the first
+      large language model to shock and impress the world.</p>
+  </div>
+  </body>
+</html>
